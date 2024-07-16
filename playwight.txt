@@ -1,0 +1,20 @@
+# Learningplaywright
+# Date 16 july 2024
+
+ Learing start date -  16 july 2024
+installation
+npm init playwright@latest
+it will create structure 
+
+playwright.conf.js - it is test runner 
+
+package.json -- it like maven all dependecy required to run project
+
+
+javascript code is anync() we need to give async() to make each statment execute in 
+sequence
+before any action we need to write "await" 
+
+async() and await come together 
+
+we can use fat pipe ----   ()=> 
