@@ -72,7 +72,7 @@ test.only('UI Controls ', async ({ page }) => {
     */
     await dropdown.selectOption('consult')
     page.pause(3000)
-    await.page.locator().click()
+    await page.locator().click()
 
 
 
