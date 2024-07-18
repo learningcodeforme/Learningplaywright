@@ -71,8 +71,24 @@ test.only('UI Controls ', async ({ page }) => {
  check for select class
     */
     await dropdown.selectOption('consult')
-    page.pause(3000)
-    await page.locator().click()
+
+    // await page.locator('.radiotextsty').last().click()
+    // await page.locator('#okayBtn').click()
+    // console.log('user is selected -' + await page.locator('.radiotextsty').last().isChecked())
+    // //await expect(page.locator('.radiotextsty').last()).toBeChecked()
+
+    await page.locator('#terms').click()
+    console.log('checkbox is selected  -' + await page.locator('#terms').isChecked())
+    await page.pause()
+    await page.locator('#terms').uncheck()
+    console.log('checkbox is  not selected  -' + await page.locator('#terms').isChecked())
+
+    // console.log("Check box  is checked " + await expect(page.locator('#terms')).toBeChecked())
+    //await page.locator('#terms').uncheck()
+    await page.pause()
+
+
+
 
 
 
