@@ -18,3 +18,112 @@ before any action we need to write "await"
 async() and await come together 
 
 we can use fat pipe ----   ()=> 
+
+
+import { test } from '@playwright/test'
+
+*******************************************************************************************
+
+1. test case - test() 
+test tag  is comming from '@playwright/test
+ broswer is fixture 
+ it is use to set new context() -- we can send cookies and other details to 
+ the browser 
+ context.newPage() - to open page fresh page 
+page.goto -final open page in browser
+ example
+test('Title of test', async ({ browser }) => {
+    const context = await browser.newContext()
+    const page = await context.newPage()
+    await page.goto('https://playwright.dev/');
+
+})
+
+*******************************************************************************************
+/ if we dont have any context to set we can direcly use page fixture and open page 
+// page.goto()
+test('Title of test', async ({ page }) => {
+    await page.goto('https://playwright.dev/');
+
+})
+
+*******************************************************************************************
+Date 17/7/24
+
+playwright  by default  run test in headless mode 
+*******************************************************************************************
+
+command to run playwright test 
+
+npx playwright test
+*******************************************************************************************
+
+to run in head mode use --headed 
+
+npx playwright test --headed
+*******************************************************************************************
+
+to run specific test we have to use test.only()
+example 
+test.only('Page Context Test', async ({ page }))
+*******************************************************************************************
+
+title - page.title()
+*******************************************************************************************
+
+expect asserstion - expect(page).toHaveTitle('Google')
+*******************************************************************************************
+
+webkit -- sfari browser
+*******************************************************************************************
+
+to make   every time Test run in headed mode we can give  command in config file
+as  
+  headless : false
+
+ projects: [
+ name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        headless: false
+
+      },
+ ]
+*******************************************************************************************
+*******************************************************************************************
+
+ locator ()- to give locator value 
+ page.locator('#username')
+*******************************************************************************************
+
+fill() - >  to enter the data
+page.locator('#username').fill('rahulshettyaccedemy')
+*******************************************************************************************
+textContent()-> to get text from locator
+   Example
+  console.log(await page.locator("[style*='block']").textContent())
+
+*******************************************************************************************
+toContainText() ->  to validate the text 
+    Example 
+    await expect(page.locator("[style*='block']")).toContainText('Incorrect')
+*******************************************************************************************
+clear the existing text we use->  fill("")
+*******************************************************************************************
+
+date 18/7/2024
+ 
+  if data is loaded in ui based on service call( network tab some servies get all ui data from backend ) we can use waitForLoadState('networkidle') to wait until network tab beocome ideal 
+  example 
+      await page.waitForLoadState('networkidle')
+    console.log(await page.locator('h5 b').allTextContents())  
+
+    waitForLoadState('networkidle') is not stable as per playwright doc
+     we can use waitFor() it wait for loctor -> locator('h5 b') to visible but in our case 
+   return multiple elements so in our case we need first
+    examples
+    await page.locator('h5 b').first().waitFor();
+    console.log(await page.locator('h5 b').allTextContents())
+
+
+*******************************************************************************************
