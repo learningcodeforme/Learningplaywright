@@ -124,6 +124,26 @@ date 18/7/2024
     examples
     await page.locator('h5 b').first().waitFor();
     console.log(await page.locator('h5 b').allTextContents())
-
-
 *******************************************************************************************
+Notes - If any test name is with other test it will run so make sure all test have unique name
+*******************************************************************************************
+Dropdown 
+ static drop down
+ check for select class we use selectOption(attribute vlaue)
+
+ example
+  const dropdown = page.locator("select[class='form-control']")
+   await dropdown.selectOption('consult')
+   ****************************************************************************************
+   if want to open playwright in playwright tool use 
+   page.pause()
+
+   ****************************************************************************************
+to verify any radio or checkbox is checked or not we use .isChecked()
+
+   ****************************************************************************************
+ toBeChecked()--> it is used with expect() to validate the radio button is checked or not 
+ note it will not work in checkbox
+ await expect(page.locator('.radiotextsty').last()).toBeChecked()
+
+   ****************************************************************************************
