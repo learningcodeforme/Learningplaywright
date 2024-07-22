@@ -212,12 +212,26 @@ playwirght have text based locator  where we pass tag name followed by
     const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible()
 
 ****************************************************************************************
-
-
+Date 22/7/2024
+pressSequentially()
+To type  and wait for auto selection to appear we need word by word type 
+  so we use pressSequentially()
 ****************************************************************************************
+Specail locator in playwright 
 
-****************************************************************************************
+1) getByRole
 
+//getByLabel() -it is special method in playwright  which is used get find the text if they part of label tag
+    // it work in radio and checkbox
+    // it will work in dropdown 
+    // it will flakey while enter in textbox not recomanded 
+
+    Example 
+    await page.getByLabel('Check me out if you Love IceCreams!').click()
+    await page.getByLabel('Employed').check()
+    await page.getByLabel('Gender').selectOption('Female')
+****************************************************************************************PPlaywright ui window to run test from there 
+npx playwright test --ui  
 
 ****************************************************************************************
 
