@@ -230,7 +230,9 @@ Specail locator in playwright
     await page.getByLabel('Check me out if you Love IceCreams!').click()
     await page.getByLabel('Employed').check()
     await page.getByLabel('Gender').selectOption('Female')
-****************************************************************************************PPlaywright ui window to run test from there 
+****************************************************************************************
+
+Playwright ui window to run test from there 
 npx playwright test --ui  
 
 ****************************************************************************************
