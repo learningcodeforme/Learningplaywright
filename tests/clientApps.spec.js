@@ -117,7 +117,7 @@ test.only('New Shop Test  Seelect product', async ({ page }) => {
     // In order confirmation page we get text of order id 
     const orderIdDetails = await page.locator('.-main').textContent()
     // do validation with order id got at time of order placement with orderid appear after  clicking view button
-    expect(orderId.includes(orderIdDetails))
+    expect(orderId.includes(orderIdDetails)).toBeTruthy()
     await page.pause()
 
 })
