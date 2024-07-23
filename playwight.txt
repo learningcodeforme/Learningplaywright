@@ -236,16 +236,29 @@ Playwright ui window to run test from there
 npx playwright test --ui  
 
 ****************************************************************************************
+Date 23/7/2024
+getByPlaceholder()
+Example: - 
+ if we have tag name is placeholder we can use getByPlaceholder()
+    await page.getByPlaceholder('Password')
+
+****************************************************************************************
+getByRole()
+here we need to pass loctor type and it name
+example- we have button whose name is "Submit" 
+await page.getByRole("button", { name: 'Submit' }).click()
+
+****************************************************************************************
+chainig of locator 
+     we use css in locator()  the use filter() which internally use getByText()
+    then use getByRole() here we have only one button so we pass simply  button without name
+    Example
+    await page.locator('app-card').filter({ hasText: 'Nokia Edge' }).getByRole('button').click()
 
 
 ****************************************************************************************
 
-
-****************************************************************************************
-
-
-****************************************************************************************
-
+plywright - we have use count() instead of lenght to get length of array
 
 ****************************************************************************************
 
