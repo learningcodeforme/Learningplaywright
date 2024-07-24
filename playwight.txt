@@ -261,24 +261,80 @@ chainig of locator
 plywright - we have use count() instead of lenght to get length of array
 
 ****************************************************************************************
+date 24/7/2024
+
+goBack() - to back previous url
+goForward() - to move next url 
+
+example 
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/")
+    await page.goto("https://www.google.com/")
+    await page.goBack()
+    await page.goForward()
 
 ****************************************************************************************
+ toBeVisible() -To valiate element is visible
+ example 
+ await expect(page.locator('#displayed-text')).toBeVisible()
+
+****************************************************************************************
+toBeHidden() to valiate element is hidden
+
+Example
+
+await expect(page.locator('#displayed-text')).toBeHidden()
+****************************************************************************************
+Alert 
+ In playwright handle javascript popup we use on() which accpect event and it crossponding method .any popup is called dialog and and we need to pass specific method to perform action
+     dialog.accept() - click ok 
+     dialog.dismiss() - to click cancel 
+     we define it anywhere and when pop appear it work
+     Example  
+     ok click -  page.on('dialog', dialog => dialog.accept())
+    cancel click-   page.on('dialog', dialog => dialog.dismiss())
+    await page.locator('#alertbtn').click()
+    await page.locator('#confirmbtn').click()
 
 
 ****************************************************************************************
+Frame
+we need to swtich to frame 
+it tag is iFrame or frameSet it mean it is frame
+ we need to got to frame use "frameLocator" and stored them in on variable
 
+Example
+    const framesPage = page.frameLocator('#courses-iframe')
+:visible
+ in frame we have onther webpage we look for locator like link - lifetime
+ but it appear 2 times but one is invisible mode  so to select visible locator 
+ we use :visble with locator
+ Example 
+    await framesPage.locator("li a[href*='lifetime']:visible").click()
 
 ****************************************************************************************
+API testing in playwright 
 
+ we stored the seesion and we can again use it login in incognito mode without using 
+ usernamae and password 
+ in postman 
+ method - post
+ url -https://rahulshettyacademy.com/api/ecom/auth/login
+ body  {"userEmail": "nitesh@example.com", "userPassword": "Lan#2070"}
 
-****************************************************************************************
+ reponse we get 
 
+ {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njk4ZDA1OWFlMmFmZDRjMGIyOTcyODEiLCJ1c2VyRW1haWwiOiJuaXRlc2hAZXhhbXBsZS5jb20iLCJ1c2VyTW9iaWxlIjo5ODk4OTg0NjEyLCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzIxODAzNjQ1LCJleHAiOjE3NTMzNjEyNDV9.AleKitioZCnmAOxlGc1Whlr0f9wgsxrPGXHEvoEJ0rQ",
+    "userId": "6698d059ae2afd4c0b297281",
+    "message": "Login Successfully"
+}
 
-****************************************************************************************
-
-
-****************************************************************************************
-
+use the above token in incognito mode 
+url - https://rahulshettyacademy.com/client/
+open application tab( after pressing F12 or inspect )
+In local storage 
+create a key called "token" and paste the value of token get in postman and hit enter 
+you will see we are logined without giving email and password
 ****************************************************************************************
 
 
