@@ -3,10 +3,15 @@ import { test, expect, request } from '@playwright/test'
 // created the loginPayload which we pass in body . it is in jsonformat
 // in javascipt key should not in "username" but in postman we required key and value should be in ""
 const loginPayload = { userEmail: "nitesh@example.com", userPassword: "Lan#2070" }
+const orderPayLoad = { orders: [{ country: "Australia", productOrderedId: "6581cade9fd99c85e8ee7ff5" }] }
 // define token
 let token;
+let orderId;
 // beforeALl- to execute it before every one
 test.beforeAll(async () => {
+    //  const apiContext = await request.newContext();
+
+    //
     // setting context for request
     const apiContext = await request.newContext();
     // define he action such as post()
@@ -23,6 +28,30 @@ test.beforeAll(async () => {
     // get the token from response body using  ".tonken"
     token = loginResponseJson.token;
     console.log("token - " + token)
+
+
+    //heere we are creating order via api 
+    // when click place order button order api execute
+    // we got set 
+    // 1. payload  what we get in payload in network tab
+    // 2. Authorization - token which we generate durig login 
+    // 3.Content-Type   -application/json
+    const orderResponse = await apiContext.post('https://rahulshettyacademy.com/api/ecom/order/create-order', {
+        data: orderPayLoad,
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json'
+        }
+    })
+    // we get respose in json
+    const orderResponseJson = await orderResponse.json();
+    console.log(orderResponseJson);
+    // we get order via acessing order using index 
+    orderId = orderResponseJson.orders[0];
+    console.log('Success message after creating order- '
+        + orderResponseJson.message)
+
+
 })
 
 // test.beforeEach( async ()=>{
@@ -44,81 +73,84 @@ test('Client App Login Test', async ({ page }) => {
 
     }, token)
 
-    const productName = "ZARA COAT 3"
-    //const email = 'nitesh@example.com'
-    const products = page.locator('.card-body')
+    // const productName = "ZARA COAT 3"
+    // //const email = 'nitesh@example.com'
+    // const products = page.locator('.card-body')
     await page.goto('https://rahulshettyacademy.com/client/');
-    // await page.locator('#userEmail').fill(email)
-    // await page.locator('#userPassword').fill('Lan#2070')
-    // await page.locator('#login').click();
-    // wait for network should become ideal
-    await page.waitForLoadState('networkidle')
-    // console.log(await page.locator('h5 b').allTextContents())
-    const count = await products.count()
+    // //when we hit url toknen  is loaded in local storage
+    // // await page.locator('#userEmail').fill(email)
+    // // await page.locator('#userPassword').fill('Lan#2070')
+    // // await page.locator('#login').click();
+    // // wait for network should become ideal
+    // await page.waitForLoadState('networkidle')
+    // // console.log(await page.locator('h5 b').allTextContents())
+    // const count = await products.count()
 
-    for (let i = 0; i < count; ++i) {
-        console.log('Inside for loop ')
-        if (await products.nth(i).locator("b").textContent() === productName) {
-            console.log('inside if condition')
-            await products.nth(i).locator("text=  Add To Cart").click()
-            console.log('product clicked')
-            break;
-        }
+    // for (let i = 0; i < count; ++i) {
+    //     console.log('Inside for loop ')
+    //     if (await products.nth(i).locator("b").textContent() === productName) {
+    //         console.log('inside if condition')
+    //         await products.nth(i).locator("text=  Add To Cart").click()
+    //         console.log('product clicked')
+    //         break;
+    //     }
 
-    }
+    // }
 
-    // two type locator  based on text in playright
-    // example -  await products.nth(i).locator("text=  Add To Cart").click()
-    //based on text we create locator uning "text"
+    // // two type locator  based on text in playright
+    // // example -  await products.nth(i).locator("text=  Add To Cart").click()
+    // //based on text we create locator uning "text"
 
-    await page.locator("[routerlink*='cart']").click()
-    //when we click on cart button we see some time take to load the content oof cart
-    // when we check for  page.locator("h3:has-text('ZARA COAT 3')").isVisible() it might fail because it visible() dont have atuo wait
-    //we have to find some locator for which we wait  so we check for list of item
-    //loading in cart section using page.locator('div li').first().waitFor();
-    await page.locator('div li').first().waitFor();
-    // playwirght have text based locator  where we pass tag name followed by
-    // "has-text" below in example
-    // isVisible()
-    const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible()
-    expect(bool).toBeTruthy()
-    // const product = await page.locator('.cartSection h3').textContent()
-    // console.log('Item in cart -' + product)
+    // await page.locator("[routerlink*='cart']").click()
+    // //when we click on cart button we see some time take to load the content oof cart
+    // // when we check for  page.locator("h3:has-text('ZARA COAT 3')").isVisible() it might fail because it visible() dont have atuo wait
+    // //we have to find some locator for which we wait  so we check for list of item
+    // //loading in cart section using page.locator('div li').first().waitFor();
+    // await page.locator('div li').first().waitFor();
+    // // playwirght have text based locator  where we pass tag name followed by
+    // // "has-text" below in example
+    // // isVisible()
+    // const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible()
+    // expect(bool).toBeTruthy()
+    // // const product = await page.locator('.cartSection h3').textContent()
+    // // console.log('Item in cart -' + product)
 
-    //await expect(page.locator('.cartSection h3').textContent()).toHaveText(productName)
+    // //await expect(page.locator('.cartSection h3').textContent()).toHaveText(productName)
 
-    await page.locator("text=Checkout").click()
-    //to type  and wait for auto selection to appear we need word by word type
-    //so we use pressSequentially()
-    await page.locator("[placeholder*='Country']").pressSequentially('Ind')
-    //  get locator of all auto suggest drop dow after typing "ind"
-    const dropdown = await page.locator('.ta-results')
-    //waiting for dropdow  to load
-    await dropdown.waitFor()
-    //get the count of dropdown item
-    const countryCount = await dropdown.locator('button').count()
-    console.log("Total number of country in dropdown appear - " + countryCount)
-    for (let i = 0; i < countryCount; ++i) {
-        const text = await dropdown.locator('button').nth(i).textContent()
-        // console.log('country name ' + await dropdown.locator('button').nth(i).textContent())
-        // get country namei in text variable and trim() it
-        if (text.trim() === 'India') {
-            await dropdown.locator('button').nth(i).click()
-            break;
-        }
-    }
-    // valiate the email appear in  confirmation page here email appear twice
-    // the below line is comment as because we are login usin api call 
-    // expect(page.locator(".user__name [type='text']").first()).toHaveText(email)
-    await page.locator("text=Place Order ").click()
+    // await page.locator("text=Checkout").click()
+    // //to type  and wait for auto selection to appear we need word by word type
+    // //so we use pressSequentially()
+    // await page.locator("[placeholder*='Country']").pressSequentially('Ind')
+    // //  get locator of all auto suggest drop dow after typing "ind"
+    // const dropdown = await page.locator('.ta-results')
+    // //waiting for dropdow  to load
+    // await dropdown.waitFor()
+    // //get the count of dropdown item
+    // const countryCount = await dropdown.locator('button').count()
+    // console.log("Total number of country in dropdown appear - " + countryCount)
+    // for (let i = 0; i < countryCount; ++i) {
+    //     const text = await dropdown.locator('button').nth(i).textContent()
+    //     // console.log('country name ' + await dropdown.locator('button').nth(i).textContent())
+    //     // get country namei in text variable and trim() it
+    //     if (text.trim() === 'India') {
+    //         await dropdown.locator('button').nth(i).click()
+    //         break;
+    //     }
+    // }
+    // // valiate the email appear in  confirmation page here email appear twice
+    // // the below line is comment as because we are login usin api call 
+    // // expect(page.locator(".user__name [type='text']").first()).toHaveText(email)
+    //  await page.locator("text=Place Order ").click()
+    await page.locator("[routerlink='/dashboard/myorders']").click()
+    page.pause()
     // check or confirmation message
-    await expect(page.locator(".hero-primary").first()).toHaveText(' Thankyou for the order. ')
+    // await expect(page.locator(".hero-primary").first()).toHaveText(' Thankyou for the order. ')
     // grabe the order id
-    const orderId = await page.locator('tr .ng-star-inserted td  .ng-star-inserted').textContent()
+    // const orderId = await page.locator('tr .ng-star-inserted td  .ng-star-inserted').textContent()
     console.log('order id ' + orderId)
-    console.log("*******************************************")
-    //go to order tab and click()
-    await page.locator("text= Orders History Page ").click()
+    console.log("***************************************")
+    // //go to order tab and click()
+    // await page.locator("text= Orders History Page ").click()
     // getByRole('button', { name: '   ORDERS' }).click()
     // scan the order table and find your grabed order id
     //tbody tr th
@@ -130,7 +162,7 @@ test('Client App Login Test', async ({ page }) => {
     for (let i = 0; i < await rows.count(); i++) {
         // get the text of row id
         const rowOrderId = await rows.nth(i).locator('th').textContent()
-        console.log('Order list - ' + rowOrderId)
+        console.log('OrderrId from orderList - ' + rowOrderId)
         // click te view button we have two button view / delete so we use first()
         rows.nth(i).locator('button').first().click()
         break;
