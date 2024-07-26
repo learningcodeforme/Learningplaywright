@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "installation\r npm init playwright@latest\r it will create structure",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test WebApiPart1.spec.js --headed"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

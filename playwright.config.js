@@ -39,8 +39,8 @@ module.exports = defineConfig({
         ...devices['Desktop Chrome'],
         headless: false,
         screenshot: 'on',
-        // trace: 'on'
-        trace: 'retain-on-failure'
+        trace: 'on'
+        //trace: 'retain-on-failure'
 
       },
 

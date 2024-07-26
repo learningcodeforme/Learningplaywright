@@ -342,13 +342,35 @@ Date 25/7/2024
 2 .Cookies 
 3.Bearer token 
 **************************************************************************
+Date 26/7/2024
 
-
+we can save the  session state of any website and store and use it 
+Example -In the below code login the merchant and get the details of 
+sessionstate and saved in context and use that context to aviod re login for 
+any other test case 
+1) storageState() - it used store the StorageSession() 
+it store sesssion detail in session.json file
+    Example -  await context.storageState({ path: "session.json" })
+ here we are using browser.new Context()- and we pass storageState() to use in other testcase
+ example 
+    webContext = await browser.newContext({ storageState: "session.json" })
 **************************************************************************
+Debug 
+ -- debug - it start from first state
+Note -  it work on webui not in api 
 
+step 1 -  In package.json add value in script section to run npm script  
+in pacakge.json
+example
+"scripts": {
+    "test": "npx playwright test WebApiPart1.spec.js --headed"
+  },
+step 2 - press ctrl+shift+P -> select npm debug script 
+it will pick the script define in  script section of package.json
 
 ****************************************************************************************
-
+In playwright we can ulter the reponse what we are  call mocking response or intercepting 
+network response
 
 ****************************************************************************************
 

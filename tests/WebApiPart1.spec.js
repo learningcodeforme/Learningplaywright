@@ -20,7 +20,7 @@ test('Client App Login Test', async ({ page }) => {
     }, response.token)
 
     await page.goto('https://rahulshettyacademy.com/client/');
-    await page.locator("[routerlink='/dashboard/myorders']").click()
+    await page.locator("[routerlink*='myorders']").click()
     console.log('order id ' + response.orderId)
     console.log("***************************************")
     // wait for table to be loaded
