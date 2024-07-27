@@ -371,28 +371,75 @@ it will pick the script define in  script section of package.json
 ****************************************************************************************
 In playwright we can ulter the reponse what we are  call mocking response or intercepting 
 network response
+************************************************************************
+Date 27/7/2024
+Id  for https://rahulshettyacademy.com/client
+shiv@example.com/Lan#2070
+
+***********************************************************************
+Test Case Details 
+NetworkTest.spec.js - It demo how can we mock the actual repsonse with our
+response using 
+route()
+fetch()
 
 ****************************************************************************************
+Secuirty Testing
+  intercept the request first - to get forbidden  message
+  Test Case Details 
+  SecurityTest.spec.js -It demo how can we moke the actual request with our request 
+  using 
+  route.continue({url:" mock url"})
+
+****************************************************************************************
+How to abort Network call 
+ sever is down -- it abort example of network call
+Test Case details 
+NetworkAbort.spec.js
+
+ // abort() --> it is used to blocked the network call 
+    // to alter network all we use router ()
+    //  here we block all request which having .jpg or ,.png or .jpeg at the end
+    await page.route('**/*.{jpg,png,jpeg}', route => route.abort())
 
 
 ****************************************************************************************
-****************************************************************************************
+To Track all response and request made in ui we can gt details
+ page.on()--> 
+    // playwright can track all the request/response  which is used in UI 
+    //  on() -it is listener it invoked when event occur like request() resposnse()
+    page.on('request', request => console.log('Request - ' + request.url()))
+    page.on('response', response => console.log("Response - " + response.url(), "Response status - " + response.status()))
 
-
-****************************************************************************************
-
-
-****************************************************************************************
-
-
-****************************************************************************************
-
+ Test Case details 
+NetworkAbort.spec.js
 
 ****************************************************************************************
+Screenschot  and visual testing in playwright 
+ 1.  partial take screensot ( specfic area screenshot)
+  we  need to pass locator then use screenshot method
+  await page.locator('.class1').first().screenshot({ path: "patialScreenshot.png" })
+2.  take scree
+nshot on entire page 
+    await page.screenshot({ path: 'screenshot.png' })
+Test case Details 
 
 
-****************************************************************************************
-****************************************************************************************
+Test case Details 
+ScreenshotVisualTest.spec.js
+test name -Sreenshot partail and full page
+
+*******************************************************************************
+ Visual testing 
+ toMatchSnapshot()
+ Match iamge with screenshot to validate them 
+we need to use toMatchSnapshot()
+ expect(await page.screenshot()).toMatchSnapshot('test.png')
+Test case Details 
+ScreenshotVisualTest.spec.js
+test Name -Visual testing using playwright
+
+************************************************************************************
 
 
 ****************************************************************************************
