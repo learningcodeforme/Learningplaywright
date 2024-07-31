@@ -8,7 +8,7 @@ import OrderHistoryPage from './pageObjects/OrderHistoryPage'
 import OrderSummaryPage from './pageObjects/OrderSummaryPage'
 
 
-test.only('New Shop Test  Seelect product', async ({ page }) => {
+test.only('Customer App Puchase Test', async ({ page }) => {
     const productName = "ZARA COAT 3"
     const email = 'nitesh@example.com'
     const password = 'Lan#2070'
