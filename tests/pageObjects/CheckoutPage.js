@@ -7,22 +7,19 @@ class CheckoutPage {
         this.checkoutButton = page.locator("text=Checkout")
     }
 
-    async checkout() {
+    async checkout(productName) {
         console.log('CLick checkout button')
         await this.itemList.first().waitFor();
-        const bool = await this.productName.isVisible()
+        // here we have to pass product name in locator so we create one getProductorLocator() in which we pass "productName"
+        const bool = await this.getProductLocator(productName).isVisible();
         await this.expect(bool).toBeTruthy()
         await this.checkoutButton.click()
 
     }
 
-    async test() {
-        await console.log('Check test')
-        // await this.itemList.first().waitFor();
-        // const bool = await this.productName.isVisible()
-        // await expect(bool).toBeTruthy()
-        // await this.checkout.click()
-
+    //In getProductLocator() we simple return the locaotor after attaching productname
+    getProductLocator(productName) {
+        return this.page.locator("h3:has-text('" + productName + "')");
     }
 
 }

@@ -1,0 +1,23 @@
+[
+    {
+        "productName": "ADIDAS ORIGINAL",
+        "email": "nitesh@example.com",
+        "password": "Lan#2070",
+        "code": "ind",
+        "countryName": "India"
+    },
+    {
+        "productName": "ZARA COAT 3",
+        "email": "nitesh@example.com",
+        "password": "Lan#2070",
+        "code": "ind",
+        "countryName": "India"
+    },
+    {
+        "productName": "IPHONE 13 PRO",
+        "email": "shiv@example.com",
+        "password": "Lan#2070",
+        "code": "ind",
+        "countryName": "India"
+    }
+]

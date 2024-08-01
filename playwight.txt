@@ -458,31 +458,215 @@ Date 28/7/24
 *********************************************************************
 Date 29/7/2024
 Page object model
-
+Implementing page object model 
 *********************************************************************
 date 30/7/2024
+Implementing page object model 
+*********************************************************************
+date 31/7/2024
+check the spelling of constructor .if it wrong we are not able to read anyproperty in code
 
 *********************************************************************
-date 30/7/2024
+date 01/8/2024
+ Create the POManager class - In that we are creating object for all page in the POManager
+ consrtructor 
+ example 
+ constructor of POManager CLass 
 
-*********************************************************************
-*********************************************************************
+ constructor(page, expect) {
+        this.page = page
+        this.expect = expect
+        this.loginPage = new LoginPage(page) =-> Creating the object of LoginPage
+        this.dasboardPage = new DashboardPage(page)
+        this.checkoutPage = new CheckoutPage(page, expect)
+        this.placeorderPage = new PlaceorderPage(page, expect)
+        this.confirmationPage = new ConfirmationPage(page, expect)
+        this.orderHistoryPage = new OrderHistoryPage(page)
+        this.orderSummaryPage = new OrderSummaryPage(page, expect)
+    }
 
+ Now - define getPropery like getLoginPage() -> 
+ it will call this.loginPage 
+ this.loginPage will call constructor of LoginPage using new LoginPage(page)  as given in 
+
+ construtor of LoginPage()
+    getLoginPage() {
+        return this.loginPage
+    }
+**********************************************************************************
+   Passing the productName in runtime and create the locator
+
+   Refernece - CheckoutPage.js 
+
+ async checkout(productName) {
+        console.log('CLick checkout button')
+        await this.itemList.first().waitFor();
+        // here we have to pass product name in locator so we create one getProductorLocator() in which we pass "productName"
+        const bool = await this.getProductLocator(productName).isVisible();
+        await this.expect(bool).toBeTruthy()
+        await this.checkoutButton.click()
+
+    }
+
+    In getProductLocator() we simple return the locaotor after attaching productname
+
+    getProductLocator(productName) {
+        return this.page.locator("h3:has-text('" + productName + "')");
+    }
 
 ****************************************************************************************
+Data Driven 
+
+step 1 - create the json file 
+json file example 
+{
+    "productName": "ADIDAS ORIGINAL",
+    "email": "nitesh@example.com",
+    "password": "Lan#2070",
+    "code": "ind",
+    "countryName": "India"
+}
 
 
-****************************************************************************************
+//without converting  json object - string - convert to js object it is working
+example - import dataSet from './TestData/placeOrder.json'
+
+//convert json object - string - convert to js object  it is not working for me 
+//import dataSet from JSON.parse(JSON.stringify('./TestData/placeOrder.json'))
 
 
-****************************************************************************************
+Implementation 
+await loginPage.validLogin(dataSet.email, dataSet.password)
+
+*********************************************************************************To Run multiple set of data we need to define json file as an Array by putting 
+[]
+
+example of json Array 
+[
+    {
+        "productName": "ADIDAS ORIGINAL",
+        "email": "nitesh@example.com",
+        "password": "Lan#2070",
+        "code": "ind",
+        "countryName": "India"
+    },
+    {
+        "productName": "ZARA COAT 3",
+        "email": "nitesh@example.com",
+        "password": "Lan#2070",
+        "code": "ind",
+        "countryName": "India"
+    },
+    {
+        "productName": "IPHONE 13 PRO",
+        "email": "shiv@example.com",
+        "password": "Lan#2070",
+        "code": "ind",
+        "countryName": "India"
+    }
+]
+
+*********************************************************************************
+import dataSet from './TestData/placeOrder.json'
+
+Step 1 - we need to create one for loop that will iterate through our dataset
+it will run number json object present in json array 
+
+example - for (const data of dataSet) {
+     // code which need to run 
+}
+Step2  when we have to run same test for multiple time we need to use  tilde sign (`) to wrap the text for in test()  
+
+Step 3 -  we need to pass $(data.productName)
+ to make to test decription unique otherwise play wright that we have same description for different test 
+ 
+    test.only(`Customer App Puchase Test ${data.productName}`, async ({ page }) => { })
+
+Step 4 - we need to replace dataSet with data  as we dfine in for loop 
+example - 
+         await loginPage.validLogin(data.email, data.password)
+        await dasboardPage.searchProductAddCart(data.productName)
+
+         so the above code will run 2 time as  line  575 we have 
+         for (const data of dataSet) {
+           // code which need to run 
+}
+
+*********************************************************************************Fixture - 
+Playwright Test is based on the concept of test fixtures. Test fixtures are used to establish the environment for each test, giving the test everything it
+
+Link -https://playwright.dev/docs/test-fixtures
+ Playwright Fixture like 
+ page 
+ context
+ browser
+ broswerName
+ request
+ we already use default fixture  in our test 
+
+ we can customize oun fixture to provide own define functionality 
+
+*********************************************************************************
+$$$$$$$$$$$$$$$$ Custiomize fixtue ************************
+create test-base.js file
+
+// Step1 - we import '@playwright/test' as base
+import base from '@playwright/test'
+
+// step 2 -we extend our base to base.test.extend
+
+//Step 3.1 -- we export base.test.extend as "customText" and it our custom fixtue
+//In test  we use test but now we use customTest 
+exports.customTest = base.test.extend(
+    {
+
+        //  Step 3 - create one js object which have value
+        //  in js object key is not under quoutes
+        testDataOrder:
+        {
+            productName: "ADIDAS ORIGINAL",
+            email: "nitesh@example.com",
+            password: "Lan#2070",
+            code: "ind",
+            countryName: "India"
+        }
 
 
-****************************************************************************************
+    }
+) 
+*********************************************************************************
+how to use custom fixture in actual test 
+ 
+ File name - ClientAppsPO.spec.js 
+ 1. we use  "customTest" as we define our custom name in test-base.js 
+ 2. we are passing js object as fixture -> testDataOrder
+ 3. we are reading the data using like 
+  testDataOrder.email -> we referenig the data present in test-base.js in js object  testDataOrder using it key (password) 
+  testDataOrder.password
+
+customTest.only('Custom Fixture Demo', async ({ page, testDataOrder }) => {
+
+    const poManager = new POManager(page, expect)
+    const loginPage = poManager.getLoginPage()
+    const dasboardPage = poManager.getDashboardPage()
+    const checkoutPage = poManager.getCheckoutPage()
+    const placeorderPage = poManager.getPlaceorderPage()
+    const confirmationPage = poManager.getConfirmationPage()
+    const orderHistoryPage = poManager.getOrderHistoryPage()
+    const orderSummaryPage = poManager.getOrderSummary()
 
 
-****************************************************************************************
-****************************************************************************************
+    await loginPage.goToPage()
+    await loginPage.validLogin(testDataOrder.email, testDataOrder.password)
+    await dasboardPage.searchProductAddCart(testDataOrder.productName)
+    await dasboardPage.navigateToCart()
+    await checkoutPage.checkout(testDataOrder.productName)
+    await placeorderPage.placeOrder(testDataOrder.code, testDataOrder.countryName, testDataOrder.email)
+    const orderId = await confirmationPage.confirmOrder()
+    await orderHistoryPage.orderHistory()
+    await orderSummaryPage.orderSummary(orderId)
+
+})
 
 
 ****************************************************************************************
