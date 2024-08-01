@@ -39,8 +39,12 @@ module.exports = defineConfig({
         ...devices['Desktop Chrome'],
         headless: false,
         screenshot: 'on',
-        trace: 'on'
+        video: 'retain-on-failure',
+        trace: 'on',
         //trace: 'retain-on-failure'
+        //viewport: { width: 1000, height: 1500 },
+        ...devices['iPhone 12']
+
 
       },
 

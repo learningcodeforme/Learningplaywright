@@ -669,19 +669,55 @@ customTest.only('Custom Fixture Demo', async ({ page, testDataOrder }) => {
 })
 
 
-****************************************************************************************
+*********************************************************************************Create own config file 
+step 1 - create  own - config file  
+ example create config file - playwright.config.test.js 
+
+step 2 
+npx playwright test <#specName> --config <#configName>  --project=<#projectName> 
+ 
+ --config -->  pass the config name which we want to execute I
+ --project -->  pass the project which we want to execute it
+
+example
+npx playwright test clientAppsPO.spec.js --config playwright.config.test.js 
+--project=firefox
+*********************************************************************************
+Define the size using viewport in config file
+example 
+viewport: { width: 1000, height: 1500 }
+*********************************************************************************
+Device  in config file
+ we can define the which type of device we are going to use as virtual 
+ it open the screen in that size
+
+ - ...devices['iPhone 12']
 
 
-****************************************************************************************
+*********************************************************************************
+Handeling ssl certificate -> some time we get ssl certificate error - your connection is not safe ( we can bypass that using below command in config file)
+ignoreHttpsError: true
+to handle persission -geograpical location ( we get in some website asking for location to move forward we can use the below in config file )
+permissions:[geolocation]
 
 
-****************************************************************************************
+*********************************************************************************
+Screenschot  
+we have to use in   "use tag"  of config file
+ screenshot: 'on',
+video Record - we can record the video in  playwright 
+trace - generate log in playwright 
+
+example
 
 
-****************************************************************************************
-
-
-****************************************************************************************
+export default defineConfig({
+  use: {
+    screenshot: 'on',
+    video: 'retain-on-failure'
+    trace: 'retain-on-failure'
+  },
+});
 ****************************************************************************************
 
 
