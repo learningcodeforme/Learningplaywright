@@ -21,7 +21,7 @@ test('New Shop Test case', async ({ page }) => {
 })
 
 //const page = await context.newPage()
-test.only('New Shop Test  Seelect product', async ({ page }) => {
+test('New Shop Test  Select product', async ({ page }) => {
 
     const productName = "ZARA COAT 3"
     const email = 'nitesh@example.com'

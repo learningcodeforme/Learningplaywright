@@ -1,6 +1,6 @@
 import { test, expect, request } from '@playwright/test'
 
-test("Security test request  itercept", async ({ page }) => {
+test("@smoke Security test request  itercept ", async ({ page }) => {
 
     //login and reach to order page
     await page.goto('https://rahulshettyacademy.com/client');

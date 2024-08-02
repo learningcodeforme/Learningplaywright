@@ -7,6 +7,8 @@ import { test, expect } from '@playwright/test'
 // the browser 
 // then  context.newPage() - to open page fresh page 
 //page.goto -final open page in browser
+// to run the test in parallel mode if all test present in same file
+//test.describe.configure({ mode: "parallel" })
 test('Browser Context Test', async ({ browser }) => {
     const context = await browser.newContext()
     const page = await context.newPage()
@@ -74,7 +76,7 @@ test('UI Controls ', async ({ page }) => {
 
     await page.locator('.radiotextsty').last().click()
     await page.locator('#okayBtn').click()
-    page.pause()
+
     console.log('Radio Button  -' + await page.locator('.radiotextsty').last().isChecked())
     await expect(page.locator('.radiotextsty').last()).toBeChecked()
 
@@ -98,7 +100,7 @@ test('UI Controls ', async ({ page }) => {
     // await expect(documentLink).toHaveAttribute('class', 'blinkingTexts')
 
     await documentLink.click();
-    await page.pause()
+
 })
 test("child window", async ({ browser }) => {
     const context = await browser.newContext()
@@ -130,9 +132,9 @@ test("child window", async ({ browser }) => {
 
     // now call the insert the value get in email variable in parent page use
     await userName.fill(email)
-    await page.pause()
+
     console.log(await page.locator('#username').textContent())
-    await page.pause()
+
 
     // to open any test in debug mode 
     // npx playwright test <#test name >   --headed --debug

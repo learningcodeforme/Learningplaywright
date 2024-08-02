@@ -63,7 +63,7 @@ for (const data of dataSet) {
     })
 }
 
-customTest.only('Custom Fixture Demo', async ({ page, testDataOrder }) => {
+customTest('Custom Fixture Demo', async ({ page, testDataOrder }) => {
 
     const poManager = new POManager(page, expect)
     const loginPage = poManager.getLoginPage()

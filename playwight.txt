@@ -3,7 +3,7 @@
 
  Learing start date -  16 july 2024
 installation
-npm init playwright@latest
+
 it will create structure 
 
 playwright.conf.js - it is test runner 
@@ -718,24 +718,92 @@ export default defineConfig({
     trace: 'retain-on-failure'
   },
 });
-****************************************************************************************
+*********************************************************************************Date 2/8/2024
 
+ retries: we shoulg give at config level not in Project level 
+ config level 
+ module.exports = defineConfig({
+  retries: 1, ------------------------------> config level
+  /* Configure projects for major browsers */
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        headless: false,
+        screenshot: 'on', ---------------------> projet level
+        video: 'retain-on-failure',
+      
+  ] 
+  })
 
-****************************************************************************************
+*********************************************************************************
+     Run test in Parallel 
+if test is present in differen file - we can controll parallel exectution 
 
+fullyParallel:  ---> true to run in parallel /false for non parallel
 
-****************************************************************************************
+module.exports = defineConfig({
+  testDir: './tests',
+  /* Run tests in files in parallel */
+  fullyParallel: false,
+  })
 
+ II.  if multple test present in same file we want to run parallel 
+  we have to use
+  
+  test.decribe.Configure({mode:"parallel"})
 
-****************************************************************************************
+III. Serial Mode - test run in sequentally order if any test fail all the remaining test will fail
+  test.decribe.Configure({mode:"serial"})
 
+*********************************************************************************
+Run test  base on TagName 
+Add  a tag in test decription and use that tag when you run using   --grep=@<tagName> 
+example 
+In test we given @smoke
 
-****************************************************************************************
+test("@smoke Security test request  itercept ", async ({ page }) => {
+})
 
+npx playwright test --grep=@smoke
+*********************************************************************************
+HTML report - it default reporting in playwright 
+it is found in the playwright-report-> index.html
+copy the path and paste in the browser
 
-****************************************************************************************
-****************************************************************************************
+*********************************************************************************
+Allure report  3rd party plugin 
+https://allurereport.org/docs/playwright/
 
+Step to Follow to work with Allure report 
+step 1 -  npm i -D @playwright/test allure-playwright    
+
+command to generate allure-report folder based on test we run
+npx playwright test <Testcase name> --reporter=line,allure-playwright
+ if test case not given it will run all test and genrate report 
+
+ --reporter=line -> it genrate line report ( it is plain text report )
+ allure-playrwight -it convert line report to allure report
+
+step 2 - npx playwright test --grep=@API --reporter=line,allure-playwright
+
+command to genrate the allure-result folder and clean previous results
+step 3 -  allure generate allure-results --clean
+
+command to open allure report
+step 4 allure open allure-report
+  or
+npx allure serve allure-results
+
+summary of step
+1.  npx playwright test --reporter=line,allure-playwright
+2.  allure generate allure-results --clean
+3.  allure open allure-report
+
+*********************************************************************************
+
+********************************************************************************
 
 ****************************************************************************************
 
