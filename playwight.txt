@@ -718,7 +718,8 @@ export default defineConfig({
     trace: 'retain-on-failure'
   },
 });
-*********************************************************************************Date 2/8/2024
+************************************************************************
+             Date 2/8/2024
 
  retries: we shoulg give at config level not in Project level 
  config level 

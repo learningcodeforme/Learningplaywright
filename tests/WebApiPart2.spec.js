@@ -14,7 +14,7 @@ test.beforeAll(async ({ browser }) => {
     webContext = await browser.newContext({ storageState: "session.json" })
 })
 //const page = await context.newPage()
-test('Test Case 1 - New Shop - Get text for all item  ', async ({ }) => {
+test('@API Test Case 1 - New Shop - Get text for all item  ', async ({ }) => {
     const page = await webContext.newPage()
     await page.goto('https://rahulshettyacademy.com/client');
     console.log(await page.title())
