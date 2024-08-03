@@ -803,19 +803,142 @@ summary of step
 3.  allure open allure-report
 
 *********************************************************************************
+Date 3/08/2024
+
+Different between javascript and typescript
+Typescript is superset of javascript
+all javascript code run in Typescript
+
+Typescript= javascript+ additonal features 
+Typescript=javascript
+
+
+Typescript primary focus on type anotation
+like data type
+String keyword use to declare string in Typescript
+
+javascript run in node 
+Typescript code  cannot run directly 
+we need to convert Typescript to javascript to run the code 
+
+example
+ js file - demo.js 
+ we can run node demo.js 
+
+ ts file demo.ts
+ we connot run directly as demo.ts
+
+ we need to convert them into javascript
+ step 1 - tsc demo.ts (tsc compile to code and make it demo.js) then we run as js 
+ step 2-  node demo.js
 
 ********************************************************************************
+install type script
 
-****************************************************************************************
+https://www.npmjs.com/package/typescript
+
+npm install -D typescript
+
+***************************
+TYpescript is static typing we need exclusive tell what type of  that we are going to use
+
+************************************************************
+Typescript  example 
+//  we need to provide data type using : <Datatype> 
+let message1: string = "Hello";
+//In ts we cannot reassign the declare variable with other data type we go errror
+message1 = "India"
+console.log(message1)
+
+let age: number = 12
+console.log(age)
+
+let isVisble: boolean = false;
+
+let numberArray: number[] = [1, 2, 3,]
+
+//when we use any data type it accept any type of value
+let data: any = 'Ram'
+data = 4;
+
+// function demo
+// we need to provide data type of parameter 
+//  we need to provide return type of  function
+function add(a: number, b: number): number {
+    return a + b
+}
+
+console.log(add(3, 4))
+
+// object in typescript 
+let user: { name: string, age: number, location: string } = { name: "bob", age: 34 }
+
+//*********** Object in javascript *********//
+// let user1 = { name: "bob", age: 34 }
+
+//In typescript we cannot add object property any time like js 
+//it is valid in js but not in ts we need to define at declaration time
+user.location = 'Patna'
 
 
-****************************************************************************************
+*********************************************************************************Cucumber -  framework 
+ cucumber + playwright 
+
+ feature file 
+ step definiton file 
+
+ cumcumber installation
+ https://cucumber.io/docs/installation/javascript/
+
+step 1 : npm install --save-dev @cucumber/cucumber
 
 
-****************************************************************************************
+step2 - plugin -Cucumber (Gherkin) Full 
 
+step 3 - https://github.com/cucumber/cucumber-js ( github link for reference)
 
-****************************************************************************************
+step 4 - Feature File it  suite  
+Feature: Greeting
+
+ Scenario- It is like a test case name 
+ feature file(suite) have multiple scenario( mutltiple test )
+
+  Scenario: Say hello
+  when - > Describe an event (When steps)
+  Then -> Describe an expected outcome (Then steps)
+
+  When the greeter says hello
+
+   Then I should have heard "hello"
+
+Step 5 -> in project path we need to define features folder
+each file inside it file with extension .feature
+
+example file name -> Ecommerce.feature
+
+Feature: Greeting
+
+  Scenario: Say 
+  Given  Greeeting
+    When the greeter says hello
+    Then I should have heard "hello"
+
+Step 6- run th feature file  -  npx cucumber-js  
+if no step define file present
+it give skelton for step defintion file
+
+step7- Create folder called step_definitions at project level 
+step 8 - create the step.js file inside step_definition folder
+step 9- copy the skelton genrated code and put actaual code bewlow that
+*******************************************************************************
+World construtor- it is avaialble for every one 
+
+******************************************************************************
+how to execute the cucumber features and step defintion file
+
+\node_modules\.bin\cucumber-js features
+
+npx cucumber-js features
 
 
 ****************************************************************************************
