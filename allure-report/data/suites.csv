@@ -1,0 +1,7 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Fri Aug 02 04:44:09 IST 2024","Fri Aug 02 04:44:13 IST 2024","3539","chromium","specialLocator.spec.js","","","","speical locator",""
+"passed","Fri Aug 02 04:24:38 IST 2024","Fri Aug 02 04:24:44 IST 2024","5352","chromium","SecurityTest.spec.js","","","","@smoke Security test request  itercept",""
+"broken","Fri Aug 02 04:38:26 IST 2024","Fri Aug 02 04:38:57 IST 2024","30449","chromium","clientApps.spec.js","","","","New Shop Test  Seelect product",""
+"passed","Fri Aug 02 04:38:26 IST 2024","Fri Aug 02 04:38:35 IST 2024","8676","chromium","Calender.spec.js","","","","Calender handling",""
+"passed","Fri Aug 02 04:44:09 IST 2024","Fri Aug 02 04:44:11 IST 2024","1907","chromium","ScreenshotVisualTest.spec.js","","","","Visual testing using playwright",""
+"passed","Fri Aug 02 04:55:03 IST 2024","Fri Aug 02 04:55:05 IST 2024","2010","chromium","WebApiPart2.spec.js","","","","@API Test Case 1 - New Shop - Get text for all item",""
