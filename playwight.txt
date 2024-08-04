@@ -941,7 +941,13 @@ how to execute the cucumber features and step defintion file
 npx cucumber-js features
 
 
-****************************************************************************************
+*******************************************************************************Date 4/8/2024
+Note Create folder called features 
+define .feature file  there
+create step_definitions folder inside features folder 
+inside step_fdefinations folder create respective js file that have actual code to run the  *.feature 
+
+
 ****************************************************************************************
 
 
